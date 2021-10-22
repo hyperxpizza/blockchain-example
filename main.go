@@ -1,5 +1,20 @@
 package main
 
-func main() {
+import (
+	"log"
 
+	"github.com/hyperxpizza/blockchain-example/blockchain"
+	"github.com/hyperxpizza/blockchain-example/cli"
+)
+
+func main() {
+	chain, err := blockchain.InitBlockChain()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer chain.Close()
+
+	cli := cli.NewCLI(chain)
+	cli.Run()
 }

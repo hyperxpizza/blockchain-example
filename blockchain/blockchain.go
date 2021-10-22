@@ -164,3 +164,7 @@ func (iterator *BlockchainIterator) Next() (*Block, error) {
 	return block, nil
 
 }
+
+func (b *Blockchain) Close() {
+	b.Database.Close()
+}

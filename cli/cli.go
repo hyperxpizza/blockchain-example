@@ -5,12 +5,19 @@ import (
 	"log"
 	"os"
 	"runtime"
+	"strconv"
 
 	"github.com/hyperxpizza/blockchain-example/blockchain"
 )
 
 type CLI struct {
 	blockchain *blockchain.Blockchain
+}
+
+func NewCLI(chain *blockchain.Blockchain) *CLI {
+	return &CLI{
+		blockchain: chain,
+	}
 }
 
 func (*CLI) PrintUsage() {
@@ -44,5 +51,19 @@ func (c *CLI) printChain() {
 
 		fmt.Printf("Previous hash : %x\n", block.PrevHash)
 		fmt.Printf("Data: %s\n", string(block.Data))
+		fmt.Printf("Hash: %x\n", block.Hash)
+
+		pow := blockchain.NewProof(block)
+		fmt.Printf("Proof of work: %s\n", strconv.FormatBool(pow.Validate()))
+		fmt.Println("")
+
+		if len(block.PrevHash) == 0 {
+			break
+		}
 	}
+}
+
+func (c *CLI) Run() {
+	c.ValidateArgs()
+
 }
