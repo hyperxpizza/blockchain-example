@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -65,5 +66,39 @@ func (c *CLI) printChain() {
 
 func (c *CLI) Run() {
 	c.ValidateArgs()
+
+	addBlockCmd := flag.NewFlagSet("add", flag.ExitOnError)
+	printChainCmd := flag.NewFlagSet("print", flag.ExitOnError)
+	addBlockData := addBlockCmd.String("block", "", "Block data")
+
+	switch os.Args[1] {
+	case "add":
+		err := addBlockCmd.Parse(os.Args[2:])
+		if err != nil {
+			log.Fatal(err)
+		}
+	case "print":
+		err := printChainCmd.Parse(os.Args[2:])
+		if err != nil {
+			log.Fatal(err)
+		}
+	default:
+		c.PrintUsage()
+		runtime.Goexit()
+
+	}
+
+	if addBlockCmd.Parsed() {
+		if *addBlockData == "" {
+			addBlockCmd.Usage()
+			runtime.Goexit()
+		}
+
+		c.AddBlock(*addBlockData)
+	}
+
+	if printChainCmd.Parsed() {
+		c.printChain()
+	}
 
 }

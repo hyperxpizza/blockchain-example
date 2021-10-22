@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	defer os.Exit(1)
+	defer os.Exit(0)
 	chain, err := blockchain.InitBlockChain()
 	if err != nil {
 		log.Fatal(err)
