@@ -6,8 +6,6 @@ import (
 	badger "github.com/dgraph-io/badger/v3"
 )
 
-const dbPath = "./tmp/blocks"
-
 func Genesis() *Block {
 	return NewBlock("Genesis", []byte{})
 }
@@ -67,7 +65,7 @@ func (chain *Blockchain) AddBlock(data string) error {
 	return nil
 }
 
-func InitBlockChain() (*Blockchain, error) {
+func InitBlockChain(dbPath string) (*Blockchain, error) {
 	var lastHash []byte
 
 	opts := badger.DefaultOptions(dbPath)
