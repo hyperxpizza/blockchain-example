@@ -50,7 +50,7 @@ func (c *CLI) printChain() {
 			break
 		}
 
-		fmt.Printf("Previous hash : %x\n", block.PrevHash)
+		fmt.Printf("Previous hash: %x\n", block.PrevHash)
 		fmt.Printf("Data: %s\n", string(block.Data))
 		fmt.Printf("Hash: %x\n", block.Hash)
 
